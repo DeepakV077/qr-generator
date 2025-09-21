@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QR Code Generator</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -16,6 +16,7 @@
   </header>
 
   <h3 class="text-3xl font-bold text-center my-4 mt-8">Free QR Code Generator</h3>
+
   <!-- Main Content -->
   <main class="flex-grow container mx-auto flex flex-col items-center justify-center py-12">
     <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md text-center">
@@ -42,8 +43,16 @@
   <!-- Footer -->
   <footer class="bg-gray-900 text-gray-300 py-6">
     <div class="container mx-auto text-center text-sm">
-      <p>© 2025 QR Generator | Built by <span class="font-semibold text-white">Deepak</span></p>
-      <p class="mt-1">Contact: <a href="mailto:deepakv30082006@gmail.com" class="text-indigo-400 hover:underline">deepakv30082006@gmail.com</a></p>
+      <p>© 2025 QR Generator | Built by 
+        <span class="font-semibold text-white">Deepak</span>
+      </p>
+      <p class="mt-1">
+        Contact: 
+        <a href="mailto:deepakv30082006@gmail.com" 
+           class="text-indigo-400 hover:underline">
+          deepakv30082006@gmail.com
+        </a>
+      </p>
     </div>
   </footer>
 
@@ -52,7 +61,7 @@
       e.preventDefault();
       const url = document.getElementById("urlInput").value;
 
-      const response = await fetch("/generate", {
+      const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url })
@@ -62,8 +71,12 @@
         const blob = await response.blob();
         const imgUrl = URL.createObjectURL(blob);
         document.getElementById("qrResult").innerHTML = `
-           <h3 class="text-xl font-semibold text-green-600 mb-4">🎉 Hurray! Here’s your QR Code</h3>
-          <img src="${imgUrl}" alt="QR Code" class="mx-auto border rounded-lg shadow-md p-2" />
+          <h3 class="text-xl font-semibold text-green-600 mb-4">
+            🎉 Hurray! Here’s your QR Code
+          </h3>
+          <img src="${imgUrl}" 
+               alt="QR Code" 
+               class="mx-auto border rounded-lg shadow-md p-2" />
         `;
       } else {
         alert("Failed to generate QR code");

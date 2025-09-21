@@ -1,0 +1,5 @@
+{
+  "builds": [
+    { "src": "api/generate.js", "use": "@vercel/node" }
+  ]
+}
