@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+  <!-- Header -->
+  <header class="bg-indigo-600 text-white py-6 shadow-md">
+    <div class="container mx-auto text-center">
+      <h1 class="text-5xl font-bold">Welcome To the QR Generator</h1>
+      <p class="mt-2 text-lg">Create QR codes for your URLs instantly!</p>
+    </div>
+  </header>
+
+  <h3 class="text-3xl font-bold text-center my-4 mt-8">Free QR Code Generator</h3>
+  <!-- Main Content -->
+  <main class="flex-grow container mx-auto flex flex-col items-center justify-center py-12">
+    <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md text-center">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6">Generate Your QR Code</h2>
+      <form id="qrForm" class="flex flex-col gap-4">
+        <input 
+          type="text" 
+          id="urlInput" 
+          placeholder="Enter your URL"
+          required
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        />
+        <button 
+          type="submit"
+          class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition"
+        >
+          Generate QR Code
+        </button>
+      </form>
+      <div id="qrResult" class="mt-6"></div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300 py-6">
+    <div class="container mx-auto text-center text-sm">
+      <p>© 2025 QR Generator | Built by <span class="font-semibold text-white">Deepak</span></p>
+      <p class="mt-1">Contact: <a href="mailto:deepakv30082006@gmail.com" class="text-indigo-400 hover:underline">deepakv30082006@gmail.com</a></p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("qrForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const url = document.getElementById("urlInput").value;
+
+      const response = await fetch("/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url })
+      });
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const imgUrl = URL.createObjectURL(blob);
+        document.getElementById("qrResult").innerHTML = `
+           <h3 class="text-xl font-semibold text-green-600 mb-4">🎉 Hurray! Here’s your QR Code</h3>
+          <img src="${imgUrl}" alt="QR Code" class="mx-auto border rounded-lg shadow-md p-2" />
+        `;
+      } else {
+        alert("Failed to generate QR code");
+      }
+    });
+  </script>
+</body>
+</html>
